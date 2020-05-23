@@ -7,41 +7,38 @@ export class Robot{
         this.position = position;
     }
     turnRobo(command){
-        status = 0;
+        let status = true;
         switch(command){
             case 'L':
                 this.arrowDirection = ARROW.LEFT;
-                status = 1;
+                status = false;
                 break;
             case 'R':
                 this.arrowDirection = ARROW.RIGHT;
-                status = 1;
+                status = false;
                 break;
             case 'U':
                 this.arrowDirection = ARROW.UP;
-                status = 1;
+                status = false;
                 break;
             case 'D':
                 this.arrowDirection = ARROW.DOWN;
-                status = 1;
+                status = false;
                 break;
         }
         return status;
     }
 
-    followCommands(commands, callback){
-        [...commands].map(command=>{
-            setTimeout(()=>{
-                let status = this.turnRobo(command);
-                if(parseInt(status) === 0){
-                    this.position = this.moveRobo(this.position);
-                }
-                callback(this.position, this.arrowDirection);
-            },2000);
-        });
+    followCommands(command, gameMatrix, callback){
+        if(this.position) {
+            if(this.turnRobo(command)){
+                this.position = this.moveRobo(this.position, gameMatrix);
+            }
+            callback(this.position, this.arrowDirection);
+        }
     }
 
-    moveRobo(position){
+    moveRobo(position, gameMatrix){
         switch(this.arrowDirection){
             case ARROW.LEFT:
                 position.x = position.x;
@@ -60,7 +57,19 @@ export class Robot{
                 position.y = position.y;
                 break;
         }
+        if (!this.isValidPosition(position, gameMatrix)){
+            return undefined;
+        }
         return position;
+    }
+    isValidPosition(position, gameMatrix){
+        try{
+            const id = gameMatrix[position.x][position.y].cellId;
+        }
+        catch{
+            return false;
+        }
+        return true;
     }
 }
 

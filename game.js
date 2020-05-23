@@ -52,7 +52,7 @@ export class Game {
             let cell = document.getElementById(randomValue.toString());
             if(cell){
                 let x, y;
-                cell.style = "background: black";
+                cell.style = "background: chocolate";
                 cell.dataset.hole = cell.id;
                 if(prevCell){
                     const x = parseInt(cell.dataset.x)
@@ -79,7 +79,7 @@ export class Game {
             if(cell && !cell.dataset.hole){
                 const i = parseInt(cell.dataset.x);
                 const j = parseInt(cell.dataset.y);
-                cell.style = "background: blue";
+                cell.style = "background: cornflowerblue";
                 const rotation =this.angles[Math.floor(Math.random() * this.angles.length)];;
                 cell.dataset.rotation = rotation;
                 //cell.innerText = rotation;
@@ -90,6 +90,7 @@ export class Game {
     }
     update(position, arrowHead){
         const id = this.matrix[position.x][position.y].cellId;
+
         const cell = document.getElementById(id);
         cell.innerHTML = `<span>${arrowHead}</span>`;
     }
