@@ -90,7 +90,6 @@ export class Game {
     }
     update(position, arrowHead){
         const id = this.matrix[position.x][position.y].cellId;
-
         const cell = document.getElementById(id);
         cell.innerHTML = `<span>${arrowHead}</span>`;
     }

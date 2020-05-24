@@ -6,6 +6,7 @@
 :root {
   --grid-cols: 8;
   --grid-rows: 8;
+  font-size: medium;;
 }
 
 #container {
@@ -20,8 +21,46 @@
   text-align: center;
 }
 </style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body >
+    <H4>Please enter below Details</H4>
+    <form>
+      <div class="row"></br></div>
+      <div class="row">
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Initial X" id="InitialX">
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Initial Y" id="InitialY">
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Commands" id="Commands">
+        </div>
+        <div class="col">
+          <button type="button" class="btn btn-primary" id="submit">Submit</button>
+        </div>
+        <div class="col">
+          <div class="btn-group btn-group-toggle" >
+            <label class="btn btn-secondary active" style="background: cornflowerblue">
+              Spinner
+            </label>
+            <label class="btn btn-secondary" style="background: chocolate">
+              Hole
+            </label>
+            <label class="btn btn-secondary" style="background: grey">
+               Rock
+            </label>
+          </div>
+        </div>
+        <div class="col">
+        </div>
+        <div class="col">
+        </div>
+      </div>
+    </form>
+    <br>
+    <h1> Matrix </h1>
     <div id="container">
     </div>
     <script type="module" src="index.js"></script>

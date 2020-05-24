@@ -2,50 +2,60 @@ import { Robot } from './robot.js';
 import { Game } from './game.js';
 import {ARROW, HURDDLE} from './model.js';
 var game = new Game();
+//var InitialPostion = {x: 0, y: 0};
+//var commands = "MMMDDMMM";
 
-var InitialPostion = {x: 0, y: 0};
-var commands = "MMMDDMMM";
-var robot = new Robot(InitialPostion, ARROW.RIGHT);
-const arrayOfCommands = [...commands];
-for(const command of arrayOfCommands){
-    let isValidPos = true;
-    robot.followCommands(command, game.matrix, (position, direction)=>{
-        if(position === undefined){
-            alert("Wrong movement");
-        } else {
-            checkForHurddle(position, direction)
-            game.update(position, direction);
 
-        }
-    });
+document.getElementById("submit").addEventListener("click", moveAllCommands);
+function moveAllCommands(){
+    var x = parseInt (document.getElementById("InitialX").value);
+    var y = parseInt (document.getElementById("InitialY").value);
+    var commands = document.getElementById("Commands").value;
+    var InitialPostion = {x: x, y: y};
+    var robot = new Robot(InitialPostion, ARROW.RIGHT);
+    const arrayOfCommands = [...commands];
+    for(const command of arrayOfCommands){
+        let isValidPos = true;
+        robot.followCommands(command, game.matrix, ()=>{
+            if(robot.position === undefined){
+                alert("Wrong movement");
+            } else {
+                checkForHurddle(robot)
+                game.update(robot.position, robot.arrowDirection);
+
+            }
+        });
+    }
 }
-
-function checkForHurddle(position, direction){
-    const matPos = game.matrix[position.x][position.y];
+function checkForHurddle(robot){
+    const matPos = game.matrix[robot.position.x][robot.position.y];
     switch(matPos.hurddle) {
         case HURDDLE.ROCK:
             alert("You have Rock in front of you cannot move in that direction");
             break;
         case HURDDLE.HOLE:
-            position.x = matPos.connectedHole.x;
-            position.y = matPos.connectedHole.y;
+            robot.position.x = matPos.connectedHole.x;
+            robot.position.y = matPos.connectedHole.y;
             break;
         case HURDDLE.SPINNER:
-            rotation = matPos.rotation;
+            let rotation = matPos.rotation;
             if(rotation !== 0 && rotation !== 360){
-                let rotateDirection = rotateRobo(direction);
+                let rotateDirection = rotateRobo(robot.arrowDirection);
                 let i = 0;
                 do {
-                    robot.turnRobo(rotateDirection[i])
+                    robot.turnRobo(rotateDirection[i]);
                     rotation = rotation - 90;
                     i++;
                 } while(rotation !== 0)
+                //game.update(position, direction);
+                
             }
             break;
     }
+    return ;
 }
 function rotateRobo (direction){
-    let turnCommandArray = []
+    let turnCommandArray = ['X'];
     switch(direction){
         case ARROW.UP:
             turnCommandArray = ['R','D', 'L'];
@@ -59,10 +69,10 @@ function rotateRobo (direction){
         case ARROW.LEFT:
             turnCommandArray = ['U','R', 'D'];
             break;
-
     }
+    return turnCommandArray;
 }
-console.dir(robot);
+
 
 
 
